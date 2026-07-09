@@ -47,7 +47,7 @@ export default function NewInvoicePage() {
   const setItem = (id: string, patch: Partial<LineItem>) =>
     set({
       items: invoice.items.map((item) =>
-        item.id === id ? { ...item, ...patch } : item
+        item.id === id ? { ...item, ...patch } : item,
       ),
     });
 
@@ -149,7 +149,7 @@ export default function NewInvoicePage() {
                         onChange={(e) =>
                           setItem(item.id, { product: e.target.value })
                         }
-                        placeholder="Quarterly bonus (Q2 2026)"
+                        placeholder="Service (202X)"
                       />
                     </div>
                     <div className="grid grid-cols-3 gap-3">
@@ -172,7 +172,9 @@ export default function NewInvoicePage() {
                         <CurrencyInput
                           id={`price-${item.id}`}
                           value={item.unitPrice}
-                          onValue={(unitPrice) => setItem(item.id, { unitPrice })}
+                          onValue={(unitPrice) =>
+                            setItem(item.id, { unitPrice })
+                          }
                         />
                       </div>
                       <div className="flex flex-col gap-2">
