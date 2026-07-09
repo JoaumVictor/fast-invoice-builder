@@ -184,12 +184,20 @@ export function InvoiceSheet({ invoice, onChange }: InvoiceSheetProps) {
             key={item.id}
             className="grid grid-cols-[1fr_90px_110px_60px_110px] items-center border-b border-neutral-200 px-3 py-4"
           >
-            <InlineInput
-              value={item.product}
-              onValue={setItem && ((v) => setItem(item.id, { product: v }))}
-              className="font-bold text-neutral-900"
-              placeholder="Service description"
-            />
+            <div className="flex flex-col gap-0.5 pr-4">
+              <InlineInput
+                value={item.title}
+                onValue={setItem && ((v) => setItem(item.id, { title: v }))}
+                className="font-bold text-neutral-900"
+                placeholder="Service"
+              />
+              <InlineInput
+                value={item.product}
+                onValue={setItem && ((v) => setItem(item.id, { product: v }))}
+                className="text-xs text-neutral-500"
+                placeholder="Service description"
+              />
+            </div>
             <InlineInput
               value={String(item.quantity)}
               onValue={

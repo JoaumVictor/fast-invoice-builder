@@ -12,7 +12,8 @@ const invoice: Invoice = {
   items: [
     {
       id: "i1",
-      product: "Service (202X)",
+      title: "Service",
+      product: "Monthly Development Service (June)",
       quantity: 1,
       unitPrice: 1350,
     },

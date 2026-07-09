@@ -7,8 +7,18 @@ export function listInvoices(): Invoice[] {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-    const parsed = JSON.parse(raw) as Invoice[];
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed = JSON.parse(raw) as (Omit<Invoice, "items"> & {
+      items: (Partial<LineItem> & Omit<LineItem, "title">)[];
+    })[];
+    if (!Array.isArray(parsed)) return [];
+    // Older invoices saved before the "title" field existed default to "Service".
+    return parsed.map((invoice) => ({
+      ...invoice,
+      items: invoice.items.map((item) => ({
+        title: "Service",
+        ...item,
+      })),
+    }));
   } catch {
     return [];
   }
@@ -38,7 +48,14 @@ export function newId(): string {
 }
 
 export function newItem(partial: Partial<LineItem> = {}): LineItem {
-  return { id: newId(), product: "", quantity: 1, unitPrice: 0, ...partial };
+  return {
+    id: newId(),
+    title: "Service",
+    product: "",
+    quantity: 1,
+    unitPrice: 0,
+    ...partial,
+  };
 }
 
 function lastInvoice(): Invoice | undefined {

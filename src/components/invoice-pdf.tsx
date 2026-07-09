@@ -61,7 +61,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e5e5e5",
   },
-  colProduct: { flex: 1 },
+  colProduct: { flex: 1, paddingRight: 10 },
+  itemTitle: { fontFamily: "Helvetica-Bold", color: "#171717" },
+  itemDescription: { fontSize: 8.5, color: "#737373", marginTop: 2 },
   colQty: { width: 65, textAlign: "right" },
   colPrice: { width: 80, textAlign: "right" },
   colTax: { width: 45, textAlign: "right" },
@@ -159,14 +161,12 @@ export function InvoicePdf({ invoice }: { invoice: Invoice }) {
         </View>
         {invoice.items.map((item) => (
           <View key={item.id} style={styles.row}>
-            <Text
-              style={[
-                styles.colProduct,
-                { fontFamily: "Helvetica-Bold", color: "#171717" },
-              ]}
-            >
-              {item.product}
-            </Text>
+            <View style={styles.colProduct}>
+              <Text style={styles.itemTitle}>{item.title}</Text>
+              {item.product ? (
+                <Text style={styles.itemDescription}>{item.product}</Text>
+              ) : null}
+            </View>
             <Text style={styles.colQty}>{item.quantity}</Text>
             <Text style={styles.colPrice}>{money(item.unitPrice)}</Text>
             <Text style={styles.colTax}></Text>

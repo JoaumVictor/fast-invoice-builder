@@ -1,5 +1,7 @@
 export type LineItem = {
   id: string;
+  /** Bold heading shown above the description, e.g. "Service". */
+  title: string;
   product: string;
   quantity: number;
   unitPrice: number;
