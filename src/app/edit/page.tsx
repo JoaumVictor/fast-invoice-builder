@@ -1,22 +1,19 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { InvoiceEditor } from "@/components/invoice-editor";
 import { getInvoice } from "@/lib/storage";
 import { Invoice } from "@/lib/types";
 
-export default function EditInvoicePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
+function EditInvoiceInner() {
+  const params = useSearchParams();
+  const id = params.get("id");
   const router = useRouter();
   const [invoice, setInvoice] = useState<Invoice | null>(null);
 
   useEffect(() => {
-    const found = getInvoice(id);
+    const found = id ? getInvoice(id) : undefined;
     if (!found) router.replace("/");
     else setInvoice(found);
   }, [id, router]);
@@ -29,5 +26,13 @@ export default function EditInvoicePage({
       backLabel="← All invoices"
       onBack={() => router.push("/")}
     />
+  );
+}
+
+export default function EditInvoicePage() {
+  return (
+    <Suspense>
+      <EditInvoiceInner />
+    </Suspense>
   );
 }

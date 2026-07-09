@@ -101,7 +101,7 @@ export default function HomePage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    render={<Link href={`/edit/${invoice.id}`} />}
+                    render={<Link href={`/edit?id=${invoice.id}`} />}
                   >
                     Edit
                   </Button>
